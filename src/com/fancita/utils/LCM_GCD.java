@@ -1,7 +1,7 @@
-package com.ashutosh.practice.NumberTheory;
+package com.fancita.utils;
 
 /**
- * Created by ashutosh on 10/11/16.
+ * Created by fancita on 10/11/16.
  */
 public class LCM_GCD {
 

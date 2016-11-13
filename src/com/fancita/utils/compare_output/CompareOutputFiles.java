@@ -1,4 +1,4 @@
-package com.fancita.utils;
+package com.fancita.utils.compare_output;
 
 import java.io.*;
 
