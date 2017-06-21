@@ -1,25 +1,41 @@
-package com.fancita.utils;
+package com.fancita.hackerrrank;
 
 import java.io.*;
 import java.util.InputMismatchException;
 
 /**
- * Created by fancita on 1/11/16.
+ * Created by ashutosh on 27/12/16.
  */
-public class FastIO {
+public class hr15m extends FastIO {
+    public static void main(String[] args) {
+        int t = reader.readInt();
+        while (t-- > 0) {
+            int n = reader.readInt();
 
-    public static InputReader reader;
-    public static OutputWriter writer;
+            int ans = 0;
+            int maxTillNow = Integer.MIN_VALUE;
+            int[] arr = new int[n];
 
-    public FastIO() {
-        reader = new InputReader(System.in);
-        writer	=	new OutputWriter(System.out);
+            for (int i = 0; i < n; i++) {
+                arr[i] = reader.readInt();
+                if (arr[i] > maxTillNow) {
+                    maxTillNow = arr[i];
+                    ans++;
+                }
+            }
+
+            writer.printLine(ans % 2 == 0 ? "ANDY" : "BOB");
+        }
+
+        writer.flush();
+        writer.close();
     }
+}
 
-    public FastIO(InputStream inputStream) {
-        reader = new InputReader(inputStream);
-        writer	=	new OutputWriter(System.out);
-    }
+class FastIO {
+
+    public static InputReader reader = new InputReader(System.in);
+    public static OutputWriter writer	=	new OutputWriter(System.out);
 
     public static class InputReader {
 

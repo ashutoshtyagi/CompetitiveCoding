@@ -1,25 +1,42 @@
-package com.fancita.utils;
+package com.fancita.codeforces;
 
 import java.io.*;
 import java.util.InputMismatchException;
 
 /**
- * Created by fancita on 1/11/16.
+ * Created by ashutosh on 18/12/16.
  */
-public class FastIO {
+public class b386 extends FastIO {
+    public static void main(String[] args) {
+        int length = reader.readInt();
+        String string = reader.readString();
 
-    public static InputReader reader;
-    public static OutputWriter writer;
+        int first = 0, second = length - 1;
+        int last = length - 1;
 
-    public FastIO() {
-        reader = new InputReader(System.in);
-        writer	=	new OutputWriter(System.out);
+        char[] ret = new char[length];
+
+        while (last >= 0) {
+            if (last - 1 >= 0) {
+                ret[first] = string.charAt(last - 1);
+            }
+            ret[second] = string.charAt(last);
+            first++;
+            second--;
+            last -= 2;
+        }
+
+        writer.printLine(new String(ret));
+        writer.flush();
+        writer.close();
     }
+}
 
-    public FastIO(InputStream inputStream) {
-        reader = new InputReader(inputStream);
-        writer	=	new OutputWriter(System.out);
-    }
+/*
+class FastIO {
+
+    public static InputReader reader = new InputReader(System.in);
+    public static OutputWriter writer	=	new OutputWriter(System.out);
 
     public static class InputReader {
 
@@ -139,12 +156,14 @@ public class FastIO {
             return array;
         }
 
-        /**
+        */
+/**
          * Read items into array starting from a given point
          * @param in
          * @param arr
          * @param i
-         */
+         *//*
+
         public static void readIntArray(InputReader in, int[] arr, int i) {
             int n = arr.length;
             for (int j = i; j < n; j++) {
@@ -153,3 +172,7 @@ public class FastIO {
         }
     }
 }
+
+
+
+*/

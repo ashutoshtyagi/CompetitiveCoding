@@ -1,6 +1,10 @@
-package com.fancita.utils;
+package com.fancita.practice.NumberTheory;
 
+import com.fancita.utils.FastIO;
+
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by fancita on 12/11/16.
@@ -86,5 +90,16 @@ public class PrimeNumbers extends FastIO {
         }
 
         return isPrime;
+    }
+
+    public static boolean checkIfNumberIsPrimeEfficient(int n) {
+        //check if n is a multiple of 2
+        if (n == 1 || n%2==0) return false;
+        //if not, then just check the odds
+        for(int i=3;i*i<=n;i+=2) {
+            if(n%i==0)
+                return false;
+        }
+        return true;
     }
 }

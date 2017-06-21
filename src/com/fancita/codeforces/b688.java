@@ -1,5 +1,7 @@
 package com.fancita.codeforces;
 
+import com.fancita.utils.FastIO;
+
 /**
  * Created by fancita on 12/11/16.
  */

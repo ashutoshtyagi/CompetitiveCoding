@@ -1,12 +1,91 @@
-package com.fancita.utils;
+package com.fancita.codeforces.Contest812;
 
 import java.io.*;
 import java.util.InputMismatchException;
 
 /**
- * Created by fancita on 1/11/16.
+ * Created by ashutosh on 1/6/17.
  */
-public class FastIO {
+public class B extends FastIO {
+    public static void main(String[] args) {
+
+        new B().execute();
+    }
+
+    public void execute() {
+
+        int rows =  reader.readInt();
+        int columns = reader.readInt() + 2;
+
+        if (rows == 0 && columns == 2) {
+            System.out.println("0");
+            return;
+        }
+
+        int[] left_most = new int[rows];
+        int[] right_most = new int[rows];
+
+        int ans = 0, last = 0;
+
+        for (int i = 0; i < rows; i++) {
+            int min = Integer.MAX_VALUE, max = Integer.MIN_VALUE;
+            String read = reader.readString();
+            for (int j = 0; j < columns; j++) {
+                if (read.charAt(j) == '1') {
+                    min = Integer.min(min, j);
+                    max = Integer.max(max, j);
+                }
+            }
+            left_most[rows - 1 - i] = min;
+            right_most[rows - 1 - i] = max;
+
+            if (min == Integer.MAX_VALUE && max == Integer.MIN_VALUE) {
+                last += 1;
+            } else {
+                if (last > 0) {
+                    ans += last;
+                    last = 0;
+                }
+            }
+        }
+
+        if (rows == 1) {
+            if (left_most[0] == 0 && right_most[0] == 0) {
+                System.out.println("0");
+                return;
+            }
+            System.out.println(right_most[0] < 0 ? "0" : right_most[0]);
+            return;
+        }
+
+        int[][] f = new int[rows][4];
+        f[0][0] = right_most[0] * 2;
+        f[0][1] = columns - 1;
+        f[0][2] = Integer.MAX_VALUE;
+        f[0][3] = Integer.MAX_VALUE;
+
+        for (int row = 1; row < rows - 1; row++) {
+            f[row][0] = (right_most[row] == Integer.MIN_VALUE ? 1 : (right_most[row] + 1) * 2 - 1) + Integer.min(f[row - 1][0], f[row - 1][2]);
+            f[row][1] = columns + Integer.min(f[row - 1][0], f[row - 1][2]);
+            f[row][2] = columns + Integer.min(f[row - 1][1], f[row - 1][3]);
+            f[row][3] = (left_most[row] == Integer.MAX_VALUE ? 1 : (columns - 1 - left_most[row] + 1)) * 2 - 1 + Integer.min(f[row - 1][1], f[row - 1][3]);
+        }
+
+        int print = Integer.min(
+                (right_most[rows - 1] == Integer.MIN_VALUE ? 0 : right_most[rows - 1] + 1) + Integer.min(f[rows - 2][0], f[rows - 2][2]),
+                (left_most[rows - 1] == Integer.MAX_VALUE ? 0 : columns - 1 - left_most[rows - 1] + 1) + Integer.min(f[rows - 2][1], f[rows - 2][3])
+        );
+
+        System.out.println(print < 0 ? "0" : print);
+    }
+
+
+
+
+}
+
+
+class FastIO {
 
     public static InputReader reader;
     public static OutputWriter writer;

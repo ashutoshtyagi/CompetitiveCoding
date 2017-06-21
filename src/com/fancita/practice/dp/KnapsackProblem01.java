@@ -46,20 +46,20 @@ public class KnapsackProblem01 {
         System.out.println(getKnapsack(weightOfKnapsack, w, v));
     }
 
-    private static int getKnapsack(int weightOfKnapsack, int[] w, int[] v) {
-        int[][] dp = new int[weightOfKnapsack + 1][w.length];
+    private static int getKnapsack(int weightOfKnapsack, int[] weights, int[] v) {
+        int[][] dp = new int[weightOfKnapsack + 1][weights.length];
 
-        for (int weight = 0; weight <= weightOfKnapsack; weight++) {
-            for (int i = 0; i < w.length; i++) {
-                dp[weight][i] = Integer.max(getDpFromArray(dp, w, weight, i-1),
-                                                v[i] +  getDpFromArray(dp, w, weight - w[i], i-1));
+        for (int w = 0; w <= weightOfKnapsack; w++) {
+            for (int i = 0; i < weights.length; i++) {
+                dp[w][i] = Integer.max(getDpFromArray(dp, w, i-1),
+                                                v[i] +  getDpFromArray(dp, w - weights[i], i-1));
             }
         }
 
-        return dp[weightOfKnapsack][w.length-1];
+        return dp[weightOfKnapsack][weights.length-1];
     }
 
-    private static int getDpFromArray(int[][] dp, int[] w, int weight, int i) {
+    private static int getDpFromArray(int[][] dp, int weight, int i) {
         if (weight < 0) {
             return Integer.MIN_VALUE;
         } else if (weight == 0 || i < 0) {

@@ -1,25 +1,40 @@
-package com.fancita.utils;
+package com.fancita.codeforces;
 
 import java.io.*;
+import java.util.HashMap;
 import java.util.InputMismatchException;
 
 /**
- * Created by fancita on 1/11/16.
+ * Created by ashutosh on 17/12/16.
  */
-public class FastIO {
-
-    public static InputReader reader;
-    public static OutputWriter writer;
-
-    public FastIO() {
-        reader = new InputReader(System.in);
-        writer	=	new OutputWriter(System.out);
+public class a385 extends FastIO {
+    public static void main(String[] args) {
+        String string = reader.readString();
+        solve(string);
+        writer.flush();
+        writer.close();
     }
 
-    public FastIO(InputStream inputStream) {
-        reader = new InputReader(inputStream);
-        writer	=	new OutputWriter(System.out);
+    public static void solve(String originalString) {
+        HashMap<String, Boolean> map = new HashMap<>();
+        map.put(originalString, true);
+        String lastString = originalString;
+        for (int i = 0; i < originalString.length() - 1; i++) {
+            String presentString = lastString.substring(1) + lastString.substring(0, 1);
+            map.put(presentString, true);
+            lastString = presentString;
+        }
+        /*for (Map.Entry<String, Boolean> entry : map.entrySet()) {
+            System.out.println(entry.getKey()+" : "+entry.getValue());
+        }*/
+        writer.printLine(map.size());
     }
+}
+
+class FastIO {
+
+    public static InputReader reader = new InputReader(System.in);
+    public static OutputWriter writer	=	new OutputWriter(System.out);
 
     public static class InputReader {
 
@@ -153,3 +168,4 @@ public class FastIO {
         }
     }
 }
+

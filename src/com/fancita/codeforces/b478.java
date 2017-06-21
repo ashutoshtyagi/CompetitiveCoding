@@ -1,11 +1,36 @@
-package com.fancita.practice.dp;
+package com.fancita.codeforces;
+
+import com.fancita.utils.FastIO;
 
 import java.math.BigInteger;
 
 /**
- * Created by fancita on 26/10/16.
+ * Created by ashutosh on 14/11/16.
  */
-public class BinomialCoefficient {
+public class b478 extends FastIO {
+    public static void main(String[] args) {
+        int n = reader.readInt();
+        int k = reader.readInt();
+        run(n, k);
+        writer.flush();
+        writer.close();
+    }
+
+    public static void run(int n, int k) {
+        BigInteger max = BinomialCoefficient.bigIntegerBinomialCoefficient(n-k+1, 2);
+
+        /* min */
+        int quotient = n / k;
+        int remainder = n % k;
+        BigInteger min = BinomialCoefficient.bigIntegerBinomialCoefficient(quotient, 2).multiply(new BigInteger(String.valueOf(k - remainder))).add(
+                BinomialCoefficient.bigIntegerBinomialCoefficient(quotient + 1, 2).multiply(new BigInteger(String.valueOf(remainder))));
+
+        writer.print(min + " ");
+        writer.print(max);
+    }
+}
+
+class BinomialCoefficient {
 
     public static BigInteger bigIntegerBinomialCoefficient(int x, int y) {
         if (y < 0 || y > x)
@@ -39,7 +64,11 @@ public class BinomialCoefficient {
         return numerator / denominator;
     }
 
-    public static int dpBinomialCoeff(int n, int k)
+// A Dynamic Programming based solution that uses table C[][] to
+// calculate the Binomial Coefficient
+
+    // Returns value of Binomial Coefficient C(n, k)
+    public static int binomialCoeff(int n, int k)
     {
         int C[][] = new int[n+1][k+1];
         int i, j;
@@ -69,10 +98,10 @@ public class BinomialCoefficient {
     }
 
     /* Driver program to test above function*/
-    public static void main(String args[])
+    /*public static void main(String args[])
     {
         int n = 5, k = 2;
-        System.out.println("Value of C("+n+","+k+") is "+ dpBinomialCoeff(n, k));
-    }
+        System.out.println("Value of C("+n+","+k+") is "+dpBinomialCoeff(n, k));
+    }*/
 
 }

@@ -1,25 +1,57 @@
-package com.fancita.utils;
+package com.fancita.practice.dp;
 
 import java.io.*;
 import java.util.InputMismatchException;
 
 /**
- * Created by fancita on 1/11/16.
+ * Created by ashutosh on 18/12/16.
  */
-public class FastIO {
+public class KnapsackG4G extends FastIO {
+    public static void main(String[] args) {
+        int T = reader.readInt();
+        while (T-- > 0) {
+            int N = reader.readInt();
+            int W = reader.readInt();
+            int[] values = IOUtils.readIntArray(reader, N);
+            int[] weights = IOUtils.readIntArray(reader, N);
 
-    public static InputReader reader;
-    public static OutputWriter writer;
+            solveKnapsack(N, W, values, weights);
+        }
 
-    public FastIO() {
-        reader = new InputReader(System.in);
-        writer	=	new OutputWriter(System.out);
+        writer.flush();
+        writer.close();
     }
 
-    public FastIO(InputStream inputStream) {
-        reader = new InputReader(inputStream);
-        writer	=	new OutputWriter(System.out);
+    private static void solveKnapsack(int N, int W, int[] values, int[] weights) {
+        int[][] dp = new int[W+1][N];
+
+        for (int w = 0; w <= W; w++) {
+            for (int i = 0; i < N; i++) {
+                dp[w][i] = Integer.max(getValueFromDp(dp, w, i-1), values[i] + getValueFromDp(dp, w-weights[i], i-1));
+            }
+        }
+
+        writer.printLine(dp[W][N-1]);
     }
+
+    private static int getValueFromDp(int[][] dp, int w, int i) {
+        if (w < 0) {
+            return Integer.MIN_VALUE;
+        }
+        if (w == 0) {
+            return 0;
+        }
+        if (i < 0) {
+            return 0;
+        }
+        return dp[w][i];
+    }
+}
+
+class FastIO {
+
+    public static InputReader reader = new InputReader(System.in);
+    public static OutputWriter writer	=	new OutputWriter(System.out);
 
     public static class InputReader {
 
@@ -143,7 +175,7 @@ public class FastIO {
          * Read items into array starting from a given point
          * @param in
          * @param arr
-         * @param i
+         * @param i is starting point
          */
         public static void readIntArray(InputReader in, int[] arr, int i) {
             int n = arr.length;
@@ -153,3 +185,4 @@ public class FastIO {
         }
     }
 }
+
